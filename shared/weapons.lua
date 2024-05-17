@@ -61,6 +61,8 @@ QBShared.Weapons = {
 	[`weapon_raycarbine`]            = { name = 'weapon_raycarbine', label = 'Raycarbine', weapontype = 'Submachine Gun', ammotype = 'AMMO_SMG', damagereason = 'Riddled / Drilled / Finished / Submachine Gunned' },
 
 	-- Shotguns
+	-- Vitto
+	[`weapon_beanbagshotgun`]	 = { name = 'weapon_beanbagshotgun', label = 'Non-Lethal Shotgun', weapontype = 'Shotgun', ammotype = 'AMMO_SHOTGUN', damagereason = 'Hit by a bean bag'},
 	[`weapon_pumpshotgun`]           = { name = 'weapon_pumpshotgun', label = 'Pump Shotgun', weapontype = 'Shotgun', ammotype = 'AMMO_SHOTGUN', damagereason = 'Devastated / Pulverized / Shotgunned' },
 	[`weapon_pumpshotgun_mk2`]       = { name = 'weapon_pumpshotgun_mk2', label = 'Pump Shotgun MK2', weapontype = 'Shotgun', ammotype = 'AMMO_SHOTGUN', damagereason = 'Devastated / Pulverized / Shotgunned' },
 	[`weapon_sawnoffshotgun`]        = { name = 'weapon_sawnoffshotgun', label = 'Sawn-off Shotgun', weapontype = 'Shotgun', ammotype = 'AMMO_SHOTGUN', damagereason = 'Devastated / Pulverized / Shotgunned' },
