@@ -307,7 +307,7 @@ function QBCore.Player.CreatePlayer(PlayerData, Offline)
                     self.Functions.RemoveItem('marked_cash', amount)
                     self.PlayerData.money['marked'] = self.PlayerData.money['marked'] - amount
                     self.Functions.UpdatePlayerData()
-                else 
+                else
                     return false
                 end
             else
