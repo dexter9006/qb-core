@@ -169,7 +169,14 @@ function QBCore.Player.CreatePlayer(PlayerData, Offline)
 
         return true
     end
-
+    
+    -- Vitto qb-simcard
+    function self.Functions.UpdateNumber(newnumber)
+        self.PlayerData.charinfo.phone = newnumber
+        self.Functions.UpdatePlayerData()
+    end
+    --
+    
     function self.Functions.SetGang(gang, grade)
         gang = gang:lower()
         grade = grade or '0'
@@ -249,7 +256,17 @@ function QBCore.Player.CreatePlayer(PlayerData, Offline)
         amount = tonumber(amount)
         if amount < 0 then return end
         if not self.PlayerData.money[moneytype] then return false end
-        self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] + amount
+        if moneytype == 'cash' then
+			self.Functions.AddItem('cash', amount)
+            self.PlayerData.money['cash'] = self.PlayerData.money['cash'] + amount
+			self.Functions.UpdatePlayerData()
+        elseif moneytype == 'marked' then
+			self.Functions.AddItem('marked_cash', amount)
+            self.PlayerData.money['cash'] = self.PlayerData.money['marked'] + amount
+			self.Functions.UpdatePlayerData()
+		else
+            self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] + amount
+        end
 
         if not self.Offline then
             self.Functions.UpdatePlayerData()
@@ -272,14 +289,40 @@ function QBCore.Player.CreatePlayer(PlayerData, Offline)
         amount = tonumber(amount)
         if amount < 0 then return end
         if not self.PlayerData.money[moneytype] then return false end
-        for _, mtype in pairs(QBCore.Config.Money.DontAllowMinus) do
-            if mtype == moneytype then
-                if (self.PlayerData.money[moneytype] - amount) < 0 then
+        if moneytype == 'cash' then
+            if self.Functions.GetItemByName('cash') ~= nil then
+                if self.Functions.GetItemByName('cash').amount >= amount then
+                    self.Functions.RemoveItem('cash', amount)
+                    self.PlayerData.money['cash'] = self.PlayerData.money['cash'] - amount
+                    self.Functions.UpdatePlayerData()
+                else
                     return false
                 end
+            else
+                return false
             end
+        elseif moneytype == 'marked' then
+            if self.Functions.GetItemByName('marked_cash') ~= nil then
+                if self.Functions.GetItemByName('marked_cash').amount >= amount then
+                    self.Functions.RemoveItem('marked_cash', amount)
+                    self.PlayerData.money['marked'] = self.PlayerData.money['marked'] - amount
+                    self.Functions.UpdatePlayerData()
+                else 
+                    return false
+                end
+            else
+                return false
+            end
+        else
+            for _, mtype in pairs(QBCore.Config.Money.DontAllowMinus) do
+                if mtype == moneytype then
+                    if (self.PlayerData.money[moneytype] - amount) < 0 then
+                        return false
+                    end
+                end
+            end
+            self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] - amount
         end
-        self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] - amount
 
         if not self.Offline then
             self.Functions.UpdatePlayerData()
@@ -579,14 +622,14 @@ function QBCore.Player.CreateCitizenId()
 end
 
 function QBCore.Functions.CreateAccountNumber()
-    local AccountNumber = 'US0' .. math.random(1, 9) .. 'QBCore' .. math.random(1111, 9999) .. math.random(1111, 9999) .. math.random(11, 99)
+    local AccountNumber = 'US0' .. math.random(1, 9) .. 'QB' .. math.random(1111, 9999) .. math.random(11, 99)
     local result = MySQL.prepare.await('SELECT EXISTS(SELECT 1 FROM players WHERE JSON_UNQUOTE(JSON_EXTRACT(charinfo, "$.account")) = ?) AS uniqueCheck', { AccountNumber })
     if result == 0 then return AccountNumber end
     return QBCore.Functions.CreateAccountNumber()
 end
 
 function QBCore.Functions.CreatePhoneNumber()
-    local PhoneNumber = math.random(100, 999) .. math.random(1000000, 9999999)
+    local PhoneNumber = math.random(555, 555) .. math.random(111111, 999999)
     local result = MySQL.prepare.await('SELECT EXISTS(SELECT 1 FROM players WHERE JSON_UNQUOTE(JSON_EXTRACT(charinfo, "$.phone")) = ?) AS uniqueCheck', { PhoneNumber })
     if result == 0 then return PhoneNumber end
     return QBCore.Functions.CreatePhoneNumber()
