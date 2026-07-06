@@ -1,7 +1,7 @@
 QBCore.Shared.Vehicles = QBCore.Shared.Vehicles or {}
 
 local Vehicles = {
-    
+
     --- Vanilla Modding
     { model = 'argento', name = 'Argento', brand = 'Obey', price = 1000000, category = 'Vanilla', type = 'automobile', shop = 'luxury'},
     { model = 'asteropers', name = 'Asterope RS', brand = 'Karin', price = 1000000, category = 'Vanilla', type = 'automobile', shop = 'luxury'},
@@ -825,10 +825,10 @@ local Vehicles = {
 
 }
 
-QBShared.VehicleHashes = QBShared.VehicleHashes or {}
+QBCore.Shared.VehicleHashes = QBCore.Shared.VehicleHashes or {}
 for i = 1, #Vehicles do
     local hash = joaat(Vehicles[i].model)
-    QBShared.Vehicles[Vehicles[i].model] = {
+    QBCore.Shared.Vehicles[Vehicles[i].model] = {
         spawncode = Vehicles[i].model,
         name = Vehicles[i].name,
         brand = Vehicles[i].brand,
@@ -839,8 +839,5 @@ for i = 1, #Vehicles do
         type = Vehicles[i].type,
         shop = Vehicles[i].shop
     }
-    QBShared.VehicleHashes[hash] = QBShared.Vehicles[Vehicles[i].model]
-end
-
     QBCore.Shared.VehicleHashes[hash] = QBCore.Shared.Vehicles[Vehicles[i].model]
 end
