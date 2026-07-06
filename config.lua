@@ -3,19 +3,19 @@ QBCore.Config = {}
 
 QBCore.Config.MaxPlayers = GetConvarInt('sv_maxclients', 48) -- Gets max players from config file, default 48
 QBCore.Config.DefaultSpawn = vector4(-1035.71, -2731.87, 12.86, 0.0)
-QBCore.Config.UpdateInterval = 5                             -- how often to update player data in minutes
+QBCore.Config.UpdateInterval = 15                             -- how often to update player data in minutes
 QBCore.Config.StatusInterval = 5000                          -- how often to check hunger/thirst status in milliseconds
 
 QBCore.Config.Money = {}
-QBCore.Config.Money.MoneyTypes = { cash = 500, bank = 5000, crypto = 0 } -- type = startamount - Add or remove money types for your server (for ex. blackmoney = 0), remember once added it will not be removed from the database!
-QBCore.Config.Money.DontAllowMinus = { 'cash', 'crypto' }                -- Money that is not allowed going in minus
+QBCore.Config.Money.MoneyTypes = { cash = 500, bank = 7500, crypto = 0, marked = 0 } -- type = startamount - Add or remove money types for your server (for ex. blackmoney = 0), remember once added it will not be removed from the database!
+QBCore.Config.Money.DontAllowMinus = { 'cash', 'crypto', 'marked' }                -- Money that is not allowed going in minus
 QBCore.Config.Money.MinusLimit = -5000                                   -- The maximum amount you can be negative
 QBCore.Config.Money.PayCheckTimeOut = 10                                 -- The time in minutes that it will give the paycheck
-QBCore.Config.Money.PayCheckSociety = false                              -- If true paycheck will come from the society account that the player is employed at, requires qb-management
+QBCore.Config.Money.PayCheckSociety = true                              -- If true paycheck will come from the society account that the player is employed at, requires qb-management
 
 QBCore.Config.Player = {}
-QBCore.Config.Player.HungerRate = 4.2 -- Rate at which hunger goes down.
-QBCore.Config.Player.ThirstRate = 3.8 -- Rate at which thirst goes down.
+QBCore.Config.Player.HungerRate = 3.8 -- Rate at which hunger goes down.
+QBCore.Config.Player.ThirstRate = 4.2 -- Rate at which thirst goes down.
 QBCore.Config.Player.Bloodtypes = {
     'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-',
 }
@@ -42,19 +42,19 @@ QBCore.Config.Player.PlayerDefaults = {
     },
     job = {
         name = 'unemployed',
-        label = 'Civilian',
+        label = 'Civil',
         payment = 10,
         type = 'none',
         onduty = false,
         isboss = false,
         grade = {
-            name = 'Freelancer',
+            name = 'Chômage',
             level = 0
         }
     },
     gang = {
         name = 'none',
-        label = 'No Gang Affiliation',
+        label = 'Aucun affiliation',
         isboss = false,
         grade = {
             name = 'none',
@@ -112,7 +112,7 @@ QBCore.Config.Server.Uptime = 0                              -- Time the server 
 QBCore.Config.Server.Whitelist = false                       -- Enable or disable whitelist on the server
 QBCore.Config.Server.WhitelistPermission = 'admin'           -- Permission that's able to enter the server when the whitelist is on
 QBCore.Config.Server.PVP = true                              -- Enable or disable pvp on the server (Ability to shoot other players)
-QBCore.Config.Server.Discord = ''                            -- Discord invite link
+QBCore.Config.Server.Discord = 'discord.gg/hyd8ke24y9'                            -- Discord invite link
 QBCore.Config.Server.CheckDuplicateLicense = true            -- Check for duplicate rockstar license on join
 QBCore.Config.Server.Permissions = { 'god', 'admin', 'mod' } -- Add as many groups as you want here after creating them in your server.cfg
 
@@ -122,8 +122,8 @@ QBCore.Config.Commands.OOCColor = { 255, 151, 133 }          -- RGB color code f
 QBCore.Config.Notify = {}
 
 QBCore.Config.Notify.NotificationStyling = {
-    group = false,      -- Allow notifications to stack with a badge instead of repeating
-    position = 'right', -- top-left | top-right | bottom-left | bottom-right | top | bottom | left | right | center
+    group = true,      -- Allow notifications to stack with a badge instead of repeating
+    position = 'left', -- top-left | top-right | bottom-left | bottom-right | top | bottom | left | right | center
     progress = true     -- Display Progress Bar
 }
 
